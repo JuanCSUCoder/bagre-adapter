@@ -37,7 +37,7 @@
     "@bonfida/spl-name-service": "^0.1.67",
     "@solana/spl-token": "^0.3.6",
     "@solana/web3.js": "^1.47.3",
-    "axios": "^0.27.2",
+    "axios": "^1.6.2",
     "bip32": "^2.0.6",
     "bip39": "^3.0.4",
     "bitcoinjs-lib": "^6.0.2",
