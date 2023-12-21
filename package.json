@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/JuanCSUCoder/bagre-adapter#4m-wallet-adapter",
   "devDependencies": {
-    "@4m/eslint-config": "^0.0.2",
     "jest": "^28.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
