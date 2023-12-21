@@ -35,8 +35,8 @@
     "testTimeout": 240000
   },
   "dependencies": {
-    "@bonfida/spl-name-service": "^0.1.40",
-    "@solana/spl-token": "^0.2.0",
+    "@bonfida/spl-name-service": "^0.1.67",
+    "@solana/spl-token": "^0.3.6",
     "@solana/web3.js": "^1.47.3",
     "axios": "^0.27.2",
     "bip32": "^2.0.6",
