@@ -1,4 +1,4 @@
-let apiUrl;
+/* let apiUrl;
 
 const salmonEnv = process.env.REACT_APP_SALMON_ENV ?? process.env.NODE_ENV;
 
@@ -16,5 +16,6 @@ switch (salmonEnv) {
   case 'main':
     apiUrl = 'https://bo0q5g7ie1.execute-api.us-east-1.amazonaws.com/main';
     break;
-}
-module.exports = { SALMON_API_URL: apiUrl };
+  } */
+
+module.exports = { SALMON_API_URL: "DISABLED" };

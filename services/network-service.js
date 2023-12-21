@@ -1,12 +1,9 @@
 'use strict';
 
-const axios = require('axios');
-const { SALMON_API_URL } = require('../constants/environment');
+const networks = require('./networks.json');
 
-let promise;
-
-const getNetworks = async () => {
-  if (promise) {
+const getNetworks = () => {
+  /* if (promise) {
     return promise;
   }
 
@@ -17,11 +14,12 @@ const getNetworks = async () => {
   } catch (error) {
     promise = null;
     throw error;
-  }
+  } */
+
+  return networks;
 };
 
 const getNetwork = async (id) => {
-  const networks = await getNetworks();
   return networks?.find((network) => network.id === id);
 };
 
