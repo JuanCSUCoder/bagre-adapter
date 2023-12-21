@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-/* const axios = require('axios');
+/* const axios = require('axios').default;
 const { SALMON_API_URL } = require('../constants/environment'); */
 
 const getMetadata = async (url) => {
@@ -9,7 +9,7 @@ const getMetadata = async (url) => {
   }); */
   return {
     error: "client_error",
-    error_description: "Feature disabled"
+    error_description: "Feature disabled",
   };
 };
 

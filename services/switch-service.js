@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-/* const axios = require('axios');
+/* const axios = require('axios').default;
 const { SALMON_API_URL } = require('../constants/environment'); */
-const switches = require('./switches.json')
+const switches = require("./switches.json");
 
 const getSwitches = async () => {
   /* if (promise) {

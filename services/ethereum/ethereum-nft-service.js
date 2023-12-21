@@ -1,10 +1,12 @@
-const http = require('axios');
+const http = require("axios").default;
 
-const { SALMON_API_URL } = require('../../constants/environment');
+const { SALMON_API_URL } = require("../../constants/environment");
 
 const getAll = async (network, owner, noCache = false) => {
   const params = { owner, noCache };
-  const { data } = await http.get(`${SALMON_API_URL}/v1/${network.id}/nft`, { params });
+  const { data } = await http.get(`${SALMON_API_URL}/v1/${network.id}/nft`, {
+    params,
+  });
   return data;
 };
 
@@ -16,7 +18,9 @@ const getAllGroupedByCollection = async (network, owner) => {
 };
 
 const getCollections = (nfts) => {
-  const collections = nfts.map((nft) => nft.collection?.name).filter((e) => e !== undefined);
+  const collections = nfts
+    .map((nft) => nft.collection?.name)
+    .filter((e) => e !== undefined);
   return Array.from(new Set(collections));
 };
 

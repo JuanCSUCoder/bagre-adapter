@@ -1,9 +1,14 @@
-'use strict';
+"use strict";
 
-const http = require('axios');
-const { SALMON_API_URL } = require('../../constants/environment');
+const http = require("axios").default;
+const { SALMON_API_URL } = require("../../constants/environment");
 
-const scanTransactions = async (network, userAccount, txObject, { origin, language }) => {
+const scanTransactions = async (
+  network,
+  userAccount,
+  txObject,
+  { origin, language }
+) => {
   const url = `${SALMON_API_URL}/v1/${network.id}/scan/transactions`;
 
   const config = {

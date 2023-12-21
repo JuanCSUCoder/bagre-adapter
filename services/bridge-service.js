@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-/* const axios = require('axios');
+/* const axios = require('axios').default;
 const { SALMON_API_URL } = require('../constants/environment'); */
 
 const getBridgeTransaction = async (id) => {
@@ -16,7 +16,7 @@ const getBridgeTransaction = async (id) => {
   } catch (e) {
     return null;
   } */
-  console.error('Bridge disabled');
+  console.error("Bridge disabled");
 };
 
 const createBridgeExchange = async (symbolIn, symbolOut, amount, addressTo) => {

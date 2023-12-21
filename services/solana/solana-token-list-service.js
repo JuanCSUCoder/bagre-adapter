@@ -1,10 +1,10 @@
-const { TOKEN_PROGRAM_ID } = require('../../constants/token-constants');
-const http = require('axios');
+const { TOKEN_PROGRAM_ID } = require("../../constants/token-constants");
+const http = require("axios").default;
 
-const TOKEN_LIST_URL_JUP = 'https://cache.jup.ag/tokens';
+const TOKEN_LIST_URL_JUP = "https://cache.jup.ag/tokens";
 
 const TOKEN_LIST_URL_CDN =
-  'https://cdn.jsdelivr.net/gh/solana-labs/token-list@latest/src/tokens/solana.tokenlist.json';
+  "https://cdn.jsdelivr.net/gh/solana-labs/token-list@latest/src/tokens/solana.tokenlist.json";
 
 let tokenList = [];
 
@@ -71,15 +71,16 @@ async function getTokenByAddress(address) {
 async function getFeaturedTokenList() {
   const tokens = await getTokenList();
   const featuredList = [
-    { symbol: 'SOL', name: 'Wrapped SOL' },
-    { symbol: 'USDC', name: 'USD Coin' },
-    { symbol: 'SRM', name: 'Serum' },
-    { symbol: 'FIDA', name: 'Bonfida' },
-    { symbol: 'RAY', name: 'Raydium' },
+    { symbol: "SOL", name: "Wrapped SOL" },
+    { symbol: "USDC", name: "USD Coin" },
+    { symbol: "SRM", name: "Serum" },
+    { symbol: "FIDA", name: "Bonfida" },
+    { symbol: "RAY", name: "Raydium" },
   ];
   return tokens.filter(
     (t) =>
-      featuredList.some((el) => el.symbol === t.symbol && el.name === t.name) && t.chainId === 101
+      featuredList.some((el) => el.symbol === t.symbol && el.name === t.name) &&
+      t.chainId === 101
   );
 }
 
