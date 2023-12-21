@@ -1,8 +1,7 @@
-# 4M Wallet Adapter
+# Bagre Adapter
 
 ## Setup
 
 ```bash
-npm i @4m/wallet-adapter --save
+npm i bagre-adapter --save
 ```
-
