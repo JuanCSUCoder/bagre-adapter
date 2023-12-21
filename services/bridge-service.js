@@ -1,10 +1,10 @@
 'use strict';
 
-const axios = require('axios').default;
-const { SALMON_API_URL } = require('../constants/environment');
+/* const axios = require('axios');
+const { SALMON_API_URL } = require('../constants/environment'); */
 
 const getBridgeTransaction = async (id) => {
-  try {
+  /* try {
     const config = {
       params: { id },
     };
@@ -15,11 +15,12 @@ const getBridgeTransaction = async (id) => {
     return null;
   } catch (e) {
     return null;
-  }
+  } */
+  console.error('Bridge disabled');
 };
 
 const createBridgeExchange = async (symbolIn, symbolOut, amount, addressTo) => {
-  try {
+  /* try {
     const config = {
       params: { symbolIn, symbolOut, amount, addressTo },
     };
@@ -30,11 +31,12 @@ const createBridgeExchange = async (symbolIn, symbolOut, amount, addressTo) => {
     return null;
   } catch (e) {
     return null;
-  }
+  } */
+  console.error("Bridge disabled");
 };
 
 const getBridgeEstimatedAmount = async (symbolIn, symbolOut, amount) => {
-  try {
+  /* try {
     const config = {
       params: { symbolIn, symbolOut, amount },
     };
@@ -45,11 +47,12 @@ const getBridgeEstimatedAmount = async (symbolIn, symbolOut, amount) => {
     return null;
   } catch (e) {
     return null;
-  }
+  } */
+  console.error("Bridge disabled");
 };
 
 const getBridgeMinimalAmount = async (symbolIn, symbolOut) => {
-  try {
+  /* try {
     const config = {
       params: { symbolIn, symbolOut },
     };
@@ -60,11 +63,12 @@ const getBridgeMinimalAmount = async (symbolIn, symbolOut) => {
     return null;
   } catch (e) {
     return null;
-  }
+  } */
+  console.error("Bridge disabled");
 };
 
 const getBridgeFeaturedTokens = async (symbol) => {
-  try {
+  /* try {
     const config = { params: { symbol } };
     const response = await axios.get(`${SALMON_API_URL}/v1/bridge/featured`, config);
     if (response) {
@@ -73,11 +77,12 @@ const getBridgeFeaturedTokens = async (symbol) => {
     return null;
   } catch (e) {
     return null;
-  }
+  } */
+  console.error("Bridge disabled");
 };
 
 const getBridgeAvailableTokens = async (symbol) => {
-  try {
+  /* try {
     const config = { params: { symbol } };
     const response = await axios.get(`${SALMON_API_URL}/v1/bridge/available`, config);
     if (response) {
@@ -86,11 +91,12 @@ const getBridgeAvailableTokens = async (symbol) => {
     return null;
   } catch (e) {
     return null;
-  }
+  } */
+  console.error("Bridge disabled");
 };
 
 const getBridgeSupportedTokens = async (network) => {
-  try {
+  /* try {
     const response = await axios.get(`${SALMON_API_URL}/v1/bridge/supported`);
     if (response) {
       return response.data;
@@ -98,7 +104,8 @@ const getBridgeSupportedTokens = async (network) => {
     return null;
   } catch (e) {
     return null;
-  }
+  } */
+  console.error("Bridge disabled");
 };
 
 module.exports = {

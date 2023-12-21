@@ -1,12 +1,11 @@
 'use strict';
 
-const axios = require('axios');
-const { SALMON_API_URL } = require('../constants/environment');
-
-let promise;
+/* const axios = require('axios');
+const { SALMON_API_URL } = require('../constants/environment'); */
+const switches = require('./switches.json')
 
 const getSwitches = async () => {
-  if (promise) {
+  /* if (promise) {
     return promise;
   }
 
@@ -17,7 +16,8 @@ const getSwitches = async () => {
   } catch (error) {
     promise = null;
     throw error;
-  }
+  } */
+  return switches;
 };
 
 module.exports = { getSwitches };
