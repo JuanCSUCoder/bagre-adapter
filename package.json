@@ -52,6 +52,7 @@
     "near-seed-phrase": "^0.2.0",
     "qs": "^6.11.2",
     "simple-uniswap-sdk": "^3.7.0",
+    "tiny-secp256k1": "^2.2.3",
     "uuid": "^9.0.1"
   }
 }
