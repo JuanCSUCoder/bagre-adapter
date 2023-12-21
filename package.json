@@ -1,0 +1,58 @@
+{
+  "name": "4m-wallet-adapter",
+  "version": "0.0.97",
+  "description": "Solana / Near wallet adapter",
+  "main": "index.js",
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "scripts": {
+    "linter": "eslint ./ --fix",
+    "publish:patch": "npm version patch && npm publish",
+    "test": "jest",
+    "login": "aws codeartifact login --tool npm --repository npm-modules --domain four-m --domain-owner 363894166745 --namespace '@4m' --profile salmon --region us-east-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salmonw/4m-modules.git"
+  },
+  "keywords": [
+    "wallet"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salmonw/4m-modules/issues"
+  },
+  "homepage": "https://github.com/salmonw/4m-modules/tree/main/crypto/wallet-adapter#readme",
+  "devDependencies": {
+    "@4m/eslint-config": "^0.0.2",
+    "jest": "^28.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "jest": {
+    "testTimeout": 240000
+  },
+  "dependencies": {
+    "@bonfida/spl-name-service": "^0.1.40",
+    "@solana/spl-token": "^0.2.0",
+    "@solana/web3.js": "^1.47.3",
+    "axios": "^0.27.2",
+    "bip32": "^2.0.6",
+    "bip39": "^3.0.4",
+    "bitcoinjs-lib": "^6.0.2",
+    "bitcore-lib": "^8.25.40",
+    "bs58": "^5.0.0",
+    "buffer": "^6.0.3",
+    "coinkey": "^3.0.0",
+    "ecpair": "^2.1.0",
+    "ed25519-hd-key": "^1.2.0",
+    "ethers": "^5.7.2",
+    "near-api-js": "^0.44.2",
+    "near-seed-phrase": "^0.2.0",
+    "qs": "^6.10.3",
+    "simple-uniswap-sdk": "^3.7.0",
+    "uuid": "^9.0.0"
+  }
+}
