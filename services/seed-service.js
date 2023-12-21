@@ -1,7 +1,7 @@
 'use strict';
 
 const bip39 = require('bip39');
-const bip32 = require('bip32');
+const bip32 = require('bip32').default();
 const { Keypair } = require('@solana/web3.js');
 const { derivePath } = require('ed25519-hd-key');
 
