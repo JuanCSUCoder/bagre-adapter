@@ -14,6 +14,7 @@ const create = async ({
   avatar = getRandomAvatar(),
   mnemonic = generateMnemonic(),
   pathIndexes = {},
+  rpcUrl = "",
 }) => {
   const switches = await getSwitches();
   const networks = await getNetworks();
@@ -25,6 +26,10 @@ const create = async ({
   await Promise.all(
     enabledNetworks.map(async (network) => {
       const indexes = pathIndexes[network.id] || [0];
+      
+      // Updates Network RPC/Node URL with provided configuration
+      network.config.nodeUrl = rpcUrl;
+
       networksAccounts[network.id] = await createNetworkAccounts({ network, mnemonic, indexes });
       return networksAccounts[network.id];
     })
