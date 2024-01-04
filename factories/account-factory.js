@@ -14,8 +14,7 @@ const create = async ({
   avatar = getRandomAvatar(),
   mnemonic = generateMnemonic(),
   pathIndexes = {},
-  rpcUrl = "",
-}) => {
+}, rpcUrl = "") => {
   const switches = await getSwitches();
   const networks = await getNetworks();
 
@@ -38,8 +37,8 @@ const create = async ({
   return new Account(id, name, avatar, mnemonic, networksAccounts);
 };
 
-const createMany = async (accounts) => {
-  return Promise.all(accounts.map(create));
+const createMany = async (accounts, rpcUrl = "") => {
+  return Promise.all(accounts.map((account) => create(account, rpcUrl)));
 };
 
 module.exports = { create, createMany };
