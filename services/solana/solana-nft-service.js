@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
 const {
   Transaction,
   PublicKey,

@@ -1,5 +1,5 @@
-import { TOKEN_PROGRAM_ID } from "../../constants/token-constants";
-import axios from "axios";
+const { TOKEN_PROGRAM_ID } = require("../../constants/token-constants");
+const axios = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
 
 const http = axios;
 
