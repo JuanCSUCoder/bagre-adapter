@@ -1,5 +1,5 @@
 const { TOKEN_PROGRAM_ID } = require("../../constants/token-constants");
-const http = require("axios").default;
+const http = require("axios");
 
 const TOKEN_LIST_URL_JUP = "https://cache.jup.ag/tokens";
 
