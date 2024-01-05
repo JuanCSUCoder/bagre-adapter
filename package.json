@@ -1,6 +1,6 @@
 {
   "name": "bagre-adapter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Solana wallet adapter",
   "main": "index.js",
   "engines": {
