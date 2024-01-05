@@ -14,12 +14,13 @@ const validationService = require('./solana-validation-service');
 const transactionService = require('./solana-transaction-service');
 
 class SolanaAccount {
-  constructor({ network, index, path, keyPair }) {
+  constructor({ network, index, path, keyPair }, rpcUrl) {
     this.network = network;
     this.index = index;
     this.path = path;
     this.keyPair = keyPair;
     this.publicKey = keyPair.publicKey;
+    this.rpcUrl = rpcUrl;
   }
 
   retrieveSecurePrivateKey() {
@@ -28,7 +29,7 @@ class SolanaAccount {
 
   async getConnection() {
     if (!this.connection) {
-      const { nodeUrl } = this.network.config;
+      const nodeUrl = this.rpcUrl;
       this.connection = new Connection(nodeUrl, 'confirmed');
     }
     return this.connection;

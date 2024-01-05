@@ -29,7 +29,7 @@ const create = async ({
       // Updates Network RPC/Node URL with provided configuration
       network.config.nodeUrl = rpcUrl;
 
-      networksAccounts[network.id] = await createNetworkAccounts({ network, mnemonic, indexes });
+      networksAccounts[network.id] = await createNetworkAccounts({ network, mnemonic, indexes }, rpcUrl);
       return networksAccounts[network.id];
     })
   );
