@@ -1,7 +1,9 @@
 "use strict";
 
-const http = require("axios").default;
+const axios = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
 const { SALMON_API_URL } = require("../../constants/environment");
+
+const http = axios;
 
 const find = async (network, address, id) => {
   const url = `${SALMON_API_URL}/v1/${network.id}/account/${address}/transactions/${id}`;

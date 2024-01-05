@@ -1,7 +1,7 @@
 "use strict";
 
-const http = require("axios").default;
-const { SALMON_API_URL } = require("../../constants/environment");
+const http = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
+import { SALMON_API_URL } from "../../constants/environment";
 
 const scanTransactions = async (
   network,

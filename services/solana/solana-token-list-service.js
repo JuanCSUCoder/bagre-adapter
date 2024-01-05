@@ -1,5 +1,7 @@
 const { TOKEN_PROGRAM_ID } = require("../../constants/token-constants");
-const http = require("axios");
+const axios = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
+
+const http = axios;
 
 const TOKEN_LIST_URL_JUP = "https://cache.jup.ag/tokens";
 
