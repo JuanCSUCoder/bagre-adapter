@@ -1,11 +1,18 @@
-const axios = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
-const { Transaction } = require('@solana/web3.js');
-const { applyDecimals } = require('./solana-token-service');
-const { getTokenList } = require('./solana-token-list-service');
-const { SOL_ADDRESS } = require('../../constants/token-constants');
-const { SALMON_API_URL } = require('../../constants/environment');
+const axios = require("axios"); // browser commonJS bundle
+const { Transaction } = require("@solana/web3.js");
+const { applyDecimals } = require("./solana-token-service");
+const { getTokenList } = require("./solana-token-list-service");
+const { SOL_ADDRESS } = require("../../constants/token-constants");
+const { SALMON_API_URL } = require("../../constants/environment");
 
-const quote = async (network, inAdress, outAdress, publicKey, amount, slippage) => {
+const quote = async (
+  network,
+  inAdress,
+  outAdress,
+  publicKey,
+  amount,
+  slippage
+) => {
   const tokens = await getTokenList();
   const inValidAddress = inAdress === publicKey ? SOL_ADDRESS : inAdress;
   const outValidAddress = outAdress === publicKey ? SOL_ADDRESS : outAdress;
@@ -28,31 +35,34 @@ const createTransaction = async (network, connection, keypair, routeId) => {
   const response = await axios.get(url, {
     params,
   });
-  const { setupTransaction, swapTransaction, cleanupTransaction } = response.data;
+  const { setupTransaction, swapTransaction, cleanupTransaction } =
+    response.data;
 
   const txids = [];
   const transactions = [
-    { name: 'setupTransaction', value: setupTransaction },
-    { name: 'swapTransaction', value: swapTransaction },
-    { name: 'cleanupTransaction', value: cleanupTransaction },
+    { name: "setupTransaction", value: setupTransaction },
+    { name: "swapTransaction", value: swapTransaction },
+    { name: "cleanupTransaction", value: cleanupTransaction },
   ].filter(({ value }) => value);
 
   for (let tx of transactions) {
     // get transaction object from serialized transaction
     const serializedTransaction = tx.value;
-    const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
+    const transaction = Transaction.from(
+      Buffer.from(serializedTransaction, "base64")
+    );
 
     // perform the swap
     const txid = await connection.sendTransaction(transaction, [keypair], {
       skipPreflight: true,
     });
 
-    const confirmation = await connection.confirmTransaction(txid, 'confirmed');
-    const status = confirmation?.value?.err ? 'fail' : 'success';
+    const confirmation = await connection.confirmTransaction(txid, "confirmed");
+    const status = confirmation?.value?.err ? "fail" : "success";
 
     txids.push({ id: txid, name: tx.name, status });
 
-    if (status === 'fail') {
+    if (status === "fail") {
       return txids;
     }
   }
