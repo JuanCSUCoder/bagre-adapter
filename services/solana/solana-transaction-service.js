@@ -1,6 +1,6 @@
 "use strict";
 
-const axios = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
+const axios = require("axios"); // browser commonJS bundle
 const { SALMON_API_URL } = require("../../constants/environment");
 
 const http = axios;

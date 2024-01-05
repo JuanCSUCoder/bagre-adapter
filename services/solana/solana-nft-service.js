@@ -1,17 +1,19 @@
-const axios = require('axios/dist/browser/axios.cjs'); // browser commonJS bundle
+const axios = require("axios"); // browser commonJS bundle
 const {
   Transaction,
   PublicKey,
   VersionedMessage,
   VersionedTransaction,
-} = require('@solana/web3.js');
-const TransactionError = require('../../errors/TransactionError');
-const { ME_PROGRAM_ID } = require('../../constants/token-constants');
-const { SALMON_API_URL } = require('../../constants/environment');
+} = require("@solana/web3.js");
+const TransactionError = require("../../errors/TransactionError");
+const { ME_PROGRAM_ID } = require("../../constants/token-constants");
+const { SALMON_API_URL } = require("../../constants/environment");
 
 const getAll = async (network, publicKey, noCache = false) => {
   const params = { publicKey, noCache };
-  const { data } = await axios.get(`${SALMON_API_URL}/v1/${network.id}/nft`, { params });
+  const { data } = await axios.get(`${SALMON_API_URL}/v1/${network.id}/nft`, {
+    params,
+  });
   return data;
 };
 
@@ -23,7 +25,9 @@ const getAllGroupedByCollection = async (network, owner) => {
 };
 
 const getCollections = (nfts) => {
-  const collections = nfts.map((nft) => nft.collection?.name).filter((e) => e !== undefined);
+  const collections = nfts
+    .map((nft) => nft.collection?.name)
+    .filter((e) => e !== undefined);
   return Array.from(new Set(collections));
 };
 
@@ -49,7 +53,9 @@ const getNftsWithoutCollection = (nfts) => {
 
 const getNftByAddress = async (network, mintAddress) => {
   try {
-    const response = await axios.get(`${SALMON_API_URL}/v1/${network.id}/nft/${mintAddress}`);
+    const response = await axios.get(
+      `${SALMON_API_URL}/v1/${network.id}/nft/${mintAddress}`
+    );
     if (response?.data?.collection) {
       return response.data;
     }
@@ -108,10 +114,13 @@ const burnNft = async (connection, transaction, signer) => {
 
   console.log(`Send transaction with id ${txid}.`);
 
-  const confirmation = await connection.confirmTransaction(txid, 'confirmed');
+  const confirmation = await connection.confirmTransaction(txid, "confirmed");
   if (confirmation?.value?.err) {
     console.error(confirmation);
-    throw new TransactionError(`The transaction with id ${txid} cannot be confirmed.`, txid);
+    throw new TransactionError(
+      `The transaction with id ${txid} cannot be confirmed.`,
+      txid
+    );
   }
 
   return txid;
@@ -160,7 +169,9 @@ const getListedByOwner = async (network, ownerAddress) => {
 
 const getBidsByOwner = async (network, ownerAddress) => {
   try {
-    const response = await axios.get(`${SALMON_API_URL}/v1/${network.id}/nft/bids/${ownerAddress}`);
+    const response = await axios.get(
+      `${SALMON_API_URL}/v1/${network.id}/nft/bids/${ownerAddress}`
+    );
     if (response) {
       return response.data;
     }
@@ -192,9 +203,20 @@ const unlistNft = async (network, connection, keyPair, tokenAddress) => {
   return sendSerializedTx(connection, data, keyPair);
 };
 
-const buyNft = async (network, connection, keyPair, tokenAddress, price, marketplaceId) => {
+const buyNft = async (
+  network,
+  connection,
+  keyPair,
+  tokenAddress,
+  price,
+  marketplaceId
+) => {
   const url = `${SALMON_API_URL}/v1/${network.id}/nft/buy-tx`;
-  const params = { buyerAddress: keyPair.publicKey.toBase58(), tokenAddress, price };
+  const params = {
+    buyerAddress: keyPair.publicKey.toBase58(),
+    tokenAddress,
+    price,
+  };
   const response = await axios.get(url, { params });
   const { createBuyTx } = response.data;
   const data = createBuyTx.data;
@@ -207,7 +229,11 @@ const buyNft = async (network, connection, keyPair, tokenAddress, price, marketp
 
 const bidNft = async (network, connection, keyPair, tokenAddress, price) => {
   const url = `${SALMON_API_URL}/v1/${network.id}/nft/bid-tx`;
-  const params = { buyerAddress: keyPair.publicKey.toBase58(), tokenAddress, price };
+  const params = {
+    buyerAddress: keyPair.publicKey.toBase58(),
+    tokenAddress,
+    price,
+  };
   const response = await axios.get(url, { params });
   const { createBidTx } = response.data;
   const data = createBidTx.data;
@@ -227,7 +253,9 @@ const sendSerializedTx = async (connection, txBuffer, keyPair) => {
   const message = VersionedMessage.deserialize(Buffer.from(txBuffer));
   const transaction = new VersionedTransaction(message);
   transaction.sign([keyPair]);
-  const txId = await connection.sendTransaction(transaction, { skipPreflight: true });
+  const txId = await connection.sendTransaction(transaction, {
+    skipPreflight: true,
+  });
   return txId;
 };
 
