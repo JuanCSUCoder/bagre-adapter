@@ -1,5 +1,7 @@
-const { TOKEN_PROGRAM_ID } = require("../../constants/token-constants");
-const http = require("axios");
+import { TOKEN_PROGRAM_ID } from "../../constants/token-constants";
+import axios from "axios";
+
+const http = axios;
 
 const TOKEN_LIST_URL_JUP = "https://cache.jup.ag/tokens";
 

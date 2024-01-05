@@ -1,7 +1,9 @@
 "use strict";
 
-const http = require("axios").default;
-const { SALMON_API_URL } = require("../../constants/environment");
+import axios from "axios";
+import { SALMON_API_URL } from "../../constants/environment";
+
+const http = axios;
 
 const find = async (network, address, id) => {
   const url = `${SALMON_API_URL}/v1/${network.id}/account/${address}/transactions/${id}`;
