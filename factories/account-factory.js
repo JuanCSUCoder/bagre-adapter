@@ -14,7 +14,7 @@ const create = async ({
   avatar = getRandomAvatar(),
   mnemonic = generateMnemonic(),
   pathIndexes = {},
-}) => {
+}, rpcUrl = "") => {
   const switches = await getSwitches();
   const networks = await getNetworks();
 
@@ -25,7 +25,11 @@ const create = async ({
   await Promise.all(
     enabledNetworks.map(async (network) => {
       const indexes = pathIndexes[network.id] || [0];
-      networksAccounts[network.id] = await createNetworkAccounts({ network, mnemonic, indexes });
+      
+      // Updates Network RPC/Node URL with provided configuration
+      network.config.nodeUrl = rpcUrl;
+
+      networksAccounts[network.id] = await createNetworkAccounts({ network, mnemonic, indexes }, rpcUrl);
       return networksAccounts[network.id];
     })
   );
@@ -33,8 +37,8 @@ const create = async ({
   return new Account(id, name, avatar, mnemonic, networksAccounts);
 };
 
-const createMany = async (accounts) => {
-  return Promise.all(accounts.map(create));
+const createMany = async (accounts, rpcUrl = "") => {
+  return Promise.all(accounts.map((account) => create(account, rpcUrl)));
 };
 
 module.exports = { create, createMany };
