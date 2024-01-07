@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const axios = require('axios').default;
-const { SALMON_API_URL } = require('../constants/environment');
+const axios = require("axios").default;
+const { SALMON_API_URL } = require("../src/constants/environment");
 
 const getPricesByPlatform = async (platform) => getPrices({ platform });
 
-const getPricesByIds = async (ids) => getPrices({ ids: ids.join(',') });
+const getPricesByIds = async (ids) => getPrices({ ids: ids.join(",") });
 
 const getPrices = async (params) => {
   const { data } = await axios.get(`${SALMON_API_URL}/v1/coins`, { params });
@@ -15,7 +15,9 @@ const getPrices = async (params) => {
 const getTopTokensByPlatform = async (platform) => getTopTokens({ platform });
 
 const getTopTokens = async (params) => {
-  const { data } = await axios.get(`${SALMON_API_URL}/v1/top-tokens`, { params });
+  const { data } = await axios.get(`${SALMON_API_URL}/v1/top-tokens`, {
+    params,
+  });
   return data;
 };
 

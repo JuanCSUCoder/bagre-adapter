@@ -2,8 +2,8 @@
 
 const { KeyPair } = require('near-api-js');
 const { parseSeedPhrase } = require('near-seed-phrase');
-const NearAccount = require('../services/near/NearAccount');
-const { listAccountsByPublicKey } = require('../services/near/near-indexer-service');
+const NearAccount = require('../../services/near/NearAccount');
+const { listAccountsByPublicKey } = require('../../services/near/near-indexer-service');
 
 const { NEAR } = require('../constants/coin-types');
 
