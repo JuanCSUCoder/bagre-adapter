@@ -1,4 +1,4 @@
-const { LAMPORTS_PER_SOL } = require('@solana/web3.js');
+const { LAMPORTS_PER_SOL, Connection, PublicKey } = require('@solana/web3.js');
 const { decorateBalanceList, decorateBalancePrices } = require('../token-decorator');
 const { getTokensByOwner, getTokenList } = require('./solana-token-list-service');
 const {
@@ -36,6 +36,12 @@ const getTokensBalance = async (connection, publicKey) => {
   return decorateBalanceList(notEmptyTokens, tokens);
 };
 
+/**
+ * 
+ * @param {Connection} connection - The RPC Connection to the Solana Network
+ * @param {PublicKey} publicKey - The publicKey of the wallet account
+ * @returns 
+ */
 const getPrices = async (connection, publicKey) => {
   try {
     return await getTokensPrice(connection, publicKey);
