@@ -51,6 +51,7 @@
     "@orca-so/whirlpools-sdk": "^0.11.8",
     "@solana/spl-token": "^0.3.9",
     "@solana/web3.js": "^1.88.0",
+    "assert": "^2.1.0",
     "axios": "^0.27.2",
     "bip32": "^2.0.6",
     "bip39": "^3.1.0",
