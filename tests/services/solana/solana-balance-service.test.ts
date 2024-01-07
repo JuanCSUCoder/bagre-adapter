@@ -1,5 +1,5 @@
 import { test } from "@jest/globals"
-import { getPrices } from "../../../services/solana/solana-balance-service";
+import { getPrices } from "../../../src/services/solana/solana-balance-service";
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 
 test('It can retrieve prices from Orca Whirpools succesfully', async () => {
