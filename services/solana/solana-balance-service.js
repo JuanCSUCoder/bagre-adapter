@@ -11,7 +11,7 @@ const {
 const { getLast24HoursChange } = require('../common-balance-service');
 const { getPricesByPlatform } = require('../price-service');
 const { SOLANA } = require('../../constants/platforms');
-const { getTokensPrice } = require('../dex/orca-whirpool-service.js');
+const { getTokensPrice } = require('../dex/orca-whirpool-service.ts');
 
 const getSolanaBalance = async (connection, publicKey) => {
   const balance = await connection.getBalance(publicKey);
