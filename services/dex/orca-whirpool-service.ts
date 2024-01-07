@@ -12,6 +12,7 @@ import {
 import { BN, Address } from "@coral-xyz/anchor";
 import { PublicKey, Connection } from "@solana/web3.js";
 import Decimal from "decimal.js";
+import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
 
 let poolsAccounts: ReadonlyMap<string, WhirlpoolData> | null = null;
@@ -68,11 +69,34 @@ export async function getTokenPrice(
 }
 
 export async function getTokensPrice(
-  connection,
-  publicKey
+  connection: Connection,
+  publicKey: PublicKey
 ): Promise<Decimal | null> {
-  // TODO: List all Associated Token Accounts
-  // TODO: Query Each price to Orca Whirpool Service
+  let addresses: string[] = [];
+
+  connection
+    .getParsedTokenAccountsByOwner(publicKey, {
+      programId: TOKEN_PROGRAM_ID,
+    })
+    .then((accounts) => {
+      const newAddrs = accounts.value.map(
+        (account) => account.account.data.parsed.info.mint
+      );
+      addresses = addresses.concat(newAddrs);
+    });
+
+  connection
+    .getParsedTokenAccountsByOwner(publicKey, {
+      programId: TOKEN_2022_PROGRAM_ID,
+    })
+    .then((accounts) => {
+      const newAddrs = accounts.value.map(
+        (account) => account.account.data.parsed.info.mint
+      );
+      addresses = addresses.concat(newAddrs);
+    });
+
+  console.log(JSON.stringify(addresses));
 
   return await getTokenPrice(
     connection,
