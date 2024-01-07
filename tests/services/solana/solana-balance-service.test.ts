@@ -5,5 +5,9 @@ import { Connection, Keypair } from "@solana/web3.js";
 test('It can retrieve prices from Orca Whirpools succesfully', async () => {
   const conn = new Connection(process.env.RPC_URL || "", "finalized")
   const keypair = Keypair.generate();
-  console.log(await getPrices(conn, keypair.publicKey));
+  
+  const price = await getPrices(conn, keypair.publicKey);
+  console.log(price);
+
+  expect(price).not.toBeNull();
 })
