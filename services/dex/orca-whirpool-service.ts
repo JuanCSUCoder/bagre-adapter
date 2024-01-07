@@ -3,8 +3,12 @@ import {
   ORCA_SUPPORTED_TICK_SPACINGS,
   ORCA_WHIRLPOOLS_CONFIG,
   ORCA_WHIRLPOOL_PROGRAM_ID,
+  PREFER_CACHE,
+  PriceCalculationData,
   PriceMap,
   PriceModule,
+  PriceModuleUtils,
+  WhirlpoolAccountFetcherInterface,
   WhirlpoolContext,
   WhirlpoolData,
   buildWhirlpoolClient,
@@ -17,7 +21,19 @@ import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { getWalletMintsAccounts } from "../solana/solana-token-mint-service";
 
 
-let poolsAccounts: ReadonlyMap<string, WhirlpoolData> | null = null;
+let availableData: Partial<PriceCalculationData> = {};
+
+async function tryUpdatingAvailableData(fetcher: WhirlpoolAccountFetcherInterface, mints: Address[]) {
+  availableData.poolMap = availableData.poolMap
+    ? availableData.poolMap
+    : await PriceModuleUtils.fetchPoolDataFromMints(fetcher, mints);
+  availableData.decimalsMap = availableData.decimalsMap
+    ? availableData.decimalsMap
+    : await PriceModuleUtils.fetchDecimalsForMints(fetcher, mints, PREFER_CACHE);
+  availableData.tickArrayMap = availableData.tickArrayMap
+    ? availableData.tickArrayMap
+    : await PriceModuleUtils.fetchTickArraysForPools(fetcher, availableData.poolMap)
+}
 
 /**
  *
@@ -43,21 +59,18 @@ export async function getTokensPriceMap(
     },
     ORCA_WHIRLPOOL_PROGRAM_ID
   );
-  
-  /* if (!poolsAccounts) {
-    poolsAccounts = await getAllWhirlpoolAccountsForConfig({
-      connection: connection,
-      programId: ORCA_WHIRLPOOL_PROGRAM_ID,
-      configId: ORCA_WHIRLPOOLS_CONFIG
-    });
-  } */
 
+  // Declares the mint account address of the USDC Stablecoin
   const USDC_MINT_KEY = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
   const USDC_MINT = new PublicKey(USDC_MINT_KEY);
 
+  const mints = tokensMints.concat([USDC_MINT]);
+
+  await tryUpdatingAvailableData(ctx.fetcher, mints);
+
   const prices = await PriceModule.fetchTokenPricesByMints(
     ctx.fetcher,
-    tokensMints.concat([USDC_MINT]),
+    mints,
     {
       quoteTokens: [
         USDC_MINT,
@@ -65,7 +78,10 @@ export async function getTokensPriceMap(
       programId: ORCA_WHIRLPOOL_PROGRAM_ID,
       whirlpoolsConfig: ORCA_WHIRLPOOLS_CONFIG,
       tickSpacings: ORCA_SUPPORTED_TICK_SPACINGS,
-    }
+    },
+    undefined,
+    undefined,
+    availableData
   );
   return prices
 }
