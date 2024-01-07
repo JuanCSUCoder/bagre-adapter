@@ -20,19 +20,28 @@ import Decimal from "decimal.js";
 import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { getWalletMintsAccounts } from "../solana/solana-token-mint-service";
 
-
 let availableData: Partial<PriceCalculationData> = {};
 
-async function tryUpdatingAvailableData(fetcher: WhirlpoolAccountFetcherInterface, mints: Address[]) {
+async function tryUpdatingAvailableData(
+  fetcher: WhirlpoolAccountFetcherInterface,
+  mints: Address[]
+) {
   availableData.poolMap = availableData.poolMap
     ? availableData.poolMap
     : await PriceModuleUtils.fetchPoolDataFromMints(fetcher, mints);
   availableData.decimalsMap = availableData.decimalsMap
     ? availableData.decimalsMap
-    : await PriceModuleUtils.fetchDecimalsForMints(fetcher, mints, PREFER_CACHE);
+    : await PriceModuleUtils.fetchDecimalsForMints(
+        fetcher,
+        mints,
+        PREFER_CACHE
+      );
   availableData.tickArrayMap = availableData.tickArrayMap
     ? availableData.tickArrayMap
-    : await PriceModuleUtils.fetchTickArraysForPools(fetcher, availableData.poolMap)
+    : await PriceModuleUtils.fetchTickArraysForPools(
+        fetcher,
+        availableData.poolMap
+      );
 }
 
 /**
@@ -72,9 +81,7 @@ export async function getTokensPriceMap(
     ctx.fetcher,
     mints,
     {
-      quoteTokens: [
-        USDC_MINT,
-      ],
+      quoteTokens: [USDC_MINT],
       programId: ORCA_WHIRLPOOL_PROGRAM_ID,
       whirlpoolsConfig: ORCA_WHIRLPOOLS_CONFIG,
       tickSpacings: ORCA_SUPPORTED_TICK_SPACINGS,
@@ -83,12 +90,12 @@ export async function getTokensPriceMap(
     undefined,
     availableData
   );
-  return prices
+  return prices;
 }
 
 type Prices = {
   mint: string;
-  usdPrice: Decimal
+  usdPrice: Decimal;
 }[];
 
 export async function getWalletTokensPrice(
@@ -99,14 +106,10 @@ export async function getWalletTokensPrice(
 
   console.log(`Mint Addresses: ${JSON.stringify(addresses)}`);
 
-  const priceMap = await getTokensPriceMap(
-    connection,
-    publicKey,
-    addresses,
-  );
+  const priceMap = await getTokensPriceMap(connection, publicKey, addresses);
 
-  return addresses.map(mint => ({
+  return addresses.map((mint) => ({
     mint: mint,
     usdPrice: priceMap[mint],
-  }))
+  }));
 }
