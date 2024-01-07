@@ -24,7 +24,7 @@ let poolsAccounts: ReadonlyMap<string, WhirlpoolData> | null = null;
  * @param {PublicKey} publicKey - The public key of the wallet account
  * @param {Address} tokenMint - The public key address of the token mint account of the requested token
  */
-export async function getTokensPrice(
+export async function getTokensPriceMap(
   connection: Connection,
   publicKey: PublicKey,
   tokensMints: Address[]
@@ -107,7 +107,7 @@ export async function getWalletTokensPrice(
 
   console.log(`Mint Addresses: ${JSON.stringify(addresses)}`);
 
-  const priceMap = await getTokensPrice(
+  const priceMap = await getTokensPriceMap(
     connection,
     publicKey,
     addresses,

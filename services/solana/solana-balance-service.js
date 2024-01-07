@@ -11,7 +11,7 @@ const {
 const { getLast24HoursChange } = require('../common-balance-service');
 const { getPricesByPlatform } = require('../price-service');
 const { SOLANA } = require('../../constants/platforms');
-const { getTokensPrice } = require('../dex/orca-whirpool-service.ts');
+const { getTokensPrice, getWalletTokensPrice } = require('../dex/orca-whirpool-service.ts');
 
 const getSolanaBalance = async (connection, publicKey) => {
   const balance = await connection.getBalance(publicKey);
@@ -44,7 +44,7 @@ const getTokensBalance = async (connection, publicKey) => {
  */
 const getPrices = async (connection, publicKey) => {
   try {
-    return await getTokensPrice(connection, publicKey);
+    return await getWalletTokensPrice(connection, publicKey);
   } catch (e) {
     console.log('Could not get prices', e.message);
     return null;
