@@ -74,7 +74,7 @@ export async function getTokensPrice(
 ): Promise<Decimal | null> {
   let addresses: string[] = [];
 
-  connection
+  const handle = connection
     .getParsedTokenAccountsByOwner(publicKey, {
       programId: TOKEN_PROGRAM_ID,
     })
@@ -85,7 +85,7 @@ export async function getTokensPrice(
       addresses = addresses.concat(newAddrs);
     });
 
-  connection
+  const handle2022 = connection
     .getParsedTokenAccountsByOwner(publicKey, {
       programId: TOKEN_2022_PROGRAM_ID,
     })
@@ -95,6 +95,9 @@ export async function getTokensPrice(
       );
       addresses = addresses.concat(newAddrs);
     });
+  
+  await handle.finally();
+  await handle2022.finally();
 
   console.log(JSON.stringify(addresses));
 
