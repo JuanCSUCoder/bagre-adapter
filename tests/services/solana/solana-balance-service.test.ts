@@ -7,7 +7,7 @@ test('It can retrieve prices from Orca Whirpools succesfully', async () => {
   const keypair = Keypair.generate();
   
   const price = await getPrices(conn, new PublicKey(process.env.TEST_PUBKEY || keypair.publicKey.toString()));
-  console.log(` Price in USDC: ${price}`);
+  console.log(` Price in USDC: ${JSON.stringify(price)}`);
 
   expect(price).not.toBeNull();
 }, 30000)

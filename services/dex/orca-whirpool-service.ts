@@ -3,6 +3,7 @@ import {
   ORCA_SUPPORTED_TICK_SPACINGS,
   ORCA_WHIRLPOOLS_CONFIG,
   ORCA_WHIRLPOOL_PROGRAM_ID,
+  PriceMap,
   PriceModule,
   WhirlpoolContext,
   WhirlpoolData,
@@ -23,11 +24,11 @@ let poolsAccounts: ReadonlyMap<string, WhirlpoolData> | null = null;
  * @param {PublicKey} publicKey - The public key of the wallet account
  * @param {Address} tokenMint - The public key address of the token mint account of the requested token
  */
-export async function getTokenPrice(
+export async function getTokensPrice(
   connection: Connection,
   publicKey: PublicKey,
-  tokenMint: Address
-): Promise<Decimal | null> {
+  tokensMints: Address[]
+): Promise<PriceMap | null> {
   const ctx = WhirlpoolContext.from(
     connection,
     {
@@ -41,7 +42,6 @@ export async function getTokenPrice(
     },
     ORCA_WHIRLPOOL_PROGRAM_ID
   );
-  const wclient = buildWhirlpoolClient(ctx);
   
   /* if (!poolsAccounts) {
     poolsAccounts = await getAllWhirlpoolAccountsForConfig({
@@ -54,24 +54,25 @@ export async function getTokenPrice(
   const USDC_MINT_KEY = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
   const USDC_MINT = new PublicKey(USDC_MINT_KEY);
 
-  const prices = await PriceModule.fetchTokenPricesByMints(ctx.fetcher, [
-    tokenMint,
-    USDC_MINT, //  USDC Stablecoin Token
-  ], {
-    quoteTokens: [
-      USDC_MINT,
-    ],
-    programId: ORCA_WHIRLPOOL_PROGRAM_ID,
-    whirlpoolsConfig: ORCA_WHIRLPOOLS_CONFIG,
-    tickSpacings: ORCA_SUPPORTED_TICK_SPACINGS,
-  });
-  return prices[tokenMint.toString()]
+  const prices = await PriceModule.fetchTokenPricesByMints(
+    ctx.fetcher,
+    tokensMints.concat([USDC_MINT]),
+    {
+      quoteTokens: [
+        USDC_MINT,
+      ],
+      programId: ORCA_WHIRLPOOL_PROGRAM_ID,
+      whirlpoolsConfig: ORCA_WHIRLPOOLS_CONFIG,
+      tickSpacings: ORCA_SUPPORTED_TICK_SPACINGS,
+    }
+  );
+  return prices
 }
 
-export async function getTokensPrice(
+export async function getWalletTokensPrice(
   connection: Connection,
   publicKey: PublicKey
-): Promise<Decimal | null> {
+): Promise<PriceMap | null> {
   let addresses: string[] = [];
 
   const handle = connection
@@ -99,11 +100,11 @@ export async function getTokensPrice(
   await handle.finally();
   await handle2022.finally();
 
-  console.log(JSON.stringify(addresses));
+  console.log(`Mint Addresses: ${JSON.stringify(addresses)}`);
 
-  return await getTokenPrice(
+  return await getTokensPrice(
     connection,
     publicKey,
-    "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" // BONK Token (For testing)
+    addresses,
   );
 }
