@@ -8,7 +8,7 @@ import { PublicKey, Connection } from "@solana/web3.js";
  * @param {PublicKey} publicKey - The public key of the wallet account
  * @param {Address} tokenMint - The public key address of the token mint account of the requested token
  */
-async function getTokenPrice(connection, publicKey, tokenMint) {
+export async function getTokenPrice(connection, publicKey, tokenMint) {
   const wclient = whirpools.buildWhirlpoolClient(
     whirpools.WhirlpoolContext.from(
       connection,
@@ -38,12 +38,7 @@ async function getTokenPrice(connection, publicKey, tokenMint) {
   }
 }
 
-async function getTokensPrice(connection, publicKey) {
+export async function getTokensPrice(connection, publicKey) {
   // TODO: List all Associated Token Accounts
   // TODO: Query Each price to Orca Whirpool Service
-}
-
-module.exports = {
-  getTokenPrice,
-  getTokensPrice
 }

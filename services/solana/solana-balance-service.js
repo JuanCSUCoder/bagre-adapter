@@ -11,7 +11,7 @@ const {
 const { getLast24HoursChange } = require('../common-balance-service');
 const { getPricesByPlatform } = require('../price-service');
 const { SOLANA } = require('../../constants/platforms');
-const { getTokensPrice } = require('../dex/orca-whirpool-service');
+const { getTokensPrice } = require('../dex/orca-whirpool-service.mjs');
 
 const getSolanaBalance = async (connection, publicKey) => {
   const balance = await connection.getBalance(publicKey);
@@ -66,4 +66,5 @@ const getBalance = async (connection, publicKey) => {
 module.exports = {
   getBalance,
   getSolanaBalance,
+  getPrices
 };
