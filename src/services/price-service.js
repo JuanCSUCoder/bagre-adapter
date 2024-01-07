@@ -1,7 +1,7 @@
 "use strict";
 
 const axios = require("axios").default;
-const { SALMON_API_URL } = require("../src/constants/environment");
+const { SALMON_API_URL } = require("../constants/environment");
 
 const getPricesByPlatform = async (platform) => getPrices({ platform });
 
