@@ -14,6 +14,7 @@ import { BN, Address } from "@coral-xyz/anchor";
 import { PublicKey, Connection } from "@solana/web3.js";
 import Decimal from "decimal.js";
 import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { getWalletMintsAccounts } from "../solana/solana-token-mint-service";
 
 
 let poolsAccounts: ReadonlyMap<string, WhirlpoolData> | null = null;
@@ -78,32 +79,7 @@ export async function getWalletTokensPrice(
   connection: Connection,
   publicKey: PublicKey
 ): Promise<Prices | null> {
-  let addresses: string[] = [];
-
-  const handle = connection
-    .getParsedTokenAccountsByOwner(publicKey, {
-      programId: TOKEN_PROGRAM_ID,
-    })
-    .then((accounts) => {
-      const newAddrs = accounts.value.map(
-        (account) => account.account.data.parsed.info.mint
-      );
-      addresses = addresses.concat(newAddrs);
-    });
-
-  const handle2022 = connection
-    .getParsedTokenAccountsByOwner(publicKey, {
-      programId: TOKEN_2022_PROGRAM_ID,
-    })
-    .then((accounts) => {
-      const newAddrs = accounts.value.map(
-        (account) => account.account.data.parsed.info.mint
-      );
-      addresses = addresses.concat(newAddrs);
-    });
-  
-  await handle.finally();
-  await handle2022.finally();
+  const addresses = await getWalletMintsAccounts(connection, publicKey);
 
   console.log(`Mint Addresses: ${JSON.stringify(addresses)}`);
 
