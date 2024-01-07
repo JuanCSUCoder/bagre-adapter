@@ -11,7 +11,7 @@
   },
   "scripts": {
     "linter": "eslint ./ --fix",
-    "build": "webpack",
+    "build": "rm -rf ./dist/* && webpack",
     "publish:patch": "npm version patch && npm publish",
     "test": "jest",
     "login": "aws codeartifact login --tool npm --repository npm-modules --domain four-m --domain-owner 363894166745 --namespace '@4m' --profile salmon --region us-east-1"
