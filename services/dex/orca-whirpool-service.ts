@@ -1,4 +1,4 @@
-import whirpools from "@orca-so/whirlpools-sdk";
+import * as whirpools from "@orca-so/whirlpools-sdk";
 import { BN, Address } from "@coral-xyz/anchor";
 import { PublicKey, Connection } from "@solana/web3.js";
 
