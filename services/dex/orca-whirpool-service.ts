@@ -3,11 +3,15 @@ import {
   ORCA_WHIRLPOOLS_CONFIG,
   ORCA_WHIRLPOOL_PROGRAM_ID,
   WhirlpoolContext,
+  WhirlpoolData,
   buildWhirlpoolClient,
   getAllWhirlpoolAccountsForConfig,
 } from "@orca-so/whirlpools-sdk";
 import { BN, Address } from "@coral-xyz/anchor";
 import { PublicKey, Connection } from "@solana/web3.js";
+
+
+let poolsAccounts: ReadonlyMap<string, WhirlpoolData> | null = null;
 
 /**
  *
@@ -37,13 +41,19 @@ export async function getTokenPrice(
   );
 
   // Gets all the whirlpools from the default Whirlpool Config and Program
-  const poolsAccounts = getAllWhirlpoolAccountsForConfig({
-    connection,
-    programId: ORCA_WHIRLPOOL_PROGRAM_ID,
-    configId: ORCA_WHIRLPOOLS_CONFIG,
-  });
+  if (!poolsAccounts) {
+    poolsAccounts = await getAllWhirlpoolAccountsForConfig({
+      connection: connection,
+      programId: ORCA_WHIRLPOOL_PROGRAM_ID,
+      configId: ORCA_WHIRLPOOLS_CONFIG,
+    });
+  }
 
-  const router = await wclient.getRouter([]);
+  console.log("Found Whirlpool: " + JSON.stringify(Array.from(poolsAccounts.entries())[0]));
+
+  const pools = Array.from(poolsAccounts.entries()).map((poolAccount) => poolAccount[0]);
+
+  const router = await wclient.getRouter(pools);
   let route: ExecutableRoute | null = null;
   try {
     route = await router.findBestRoute({
