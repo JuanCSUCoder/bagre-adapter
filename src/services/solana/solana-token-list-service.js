@@ -1,4 +1,4 @@
-const { TOKEN_PROGRAM_ID } = require("../../src/constants/token-constants");
+const { TOKEN_PROGRAM_ID } = require("../../constants/token-constants");
 const axios = require("axios"); // browser commonJS bundle
 
 const http = axios;
