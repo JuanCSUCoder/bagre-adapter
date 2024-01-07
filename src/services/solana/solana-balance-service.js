@@ -13,10 +13,10 @@ const {
   SOL_NAME,
   SOL_LOGO,
   SOL_ADDRESS,
-} = require("../../src/constants/token-constants.js");
+} = require("../../constants/token-constants.js");
 const { getLast24HoursChange } = require("../common-balance-service");
 const { getPricesByPlatform } = require("../price-service");
-const { SOLANA } = require("../../src/constants/platforms.js");
+const { SOLANA } = require("../../constants/platforms.js");
 const {
   getTokensPrice,
   getWalletTokensPrice,
