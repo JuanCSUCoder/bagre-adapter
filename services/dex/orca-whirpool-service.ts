@@ -1,5 +1,4 @@
 import {
-  ExecutableRoute,
   ORCA_SUPPORTED_TICK_SPACINGS,
   ORCA_WHIRLPOOLS_CONFIG,
   ORCA_WHIRLPOOL_PROGRAM_ID,
@@ -10,14 +9,10 @@ import {
   PriceModuleUtils,
   WhirlpoolAccountFetcherInterface,
   WhirlpoolContext,
-  WhirlpoolData,
-  buildWhirlpoolClient,
-  getAllWhirlpoolAccountsForConfig,
 } from "@orca-so/whirlpools-sdk";
-import { BN, Address } from "@coral-xyz/anchor";
+import { Address } from "@coral-xyz/anchor";
 import { PublicKey, Connection } from "@solana/web3.js";
 import Decimal from "decimal.js";
-import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { getWalletMintsAccounts } from "../solana/solana-token-mint-service";
 
 let availableData: Partial<PriceCalculationData> = {};
