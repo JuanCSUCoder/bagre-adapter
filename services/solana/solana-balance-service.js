@@ -11,6 +11,7 @@ const {
 const { getLast24HoursChange } = require('../common-balance-service');
 const { getPricesByPlatform } = require('../price-service');
 const { SOLANA } = require('../../constants/platforms');
+const { getTokensPrice } = require('../dex/orca-whirpool-service');
 
 const getSolanaBalance = async (connection, publicKey) => {
   const balance = await connection.getBalance(publicKey);
@@ -35,9 +36,9 @@ const getTokensBalance = async (connection, publicKey) => {
   return decorateBalanceList(notEmptyTokens, tokens);
 };
 
-const getPrices = async () => {
+const getPrices = async (connection, publicKey) => {
   try {
-    return await getPricesByPlatform(SOLANA);
+    return await getTokensPrice(connection, publicKey);
   } catch (e) {
     console.log('Could not get prices', e.message);
     return null;
@@ -47,7 +48,7 @@ const getPrices = async () => {
 const getBalance = async (connection, publicKey) => {
   const tokensBalance = await getTokensBalance(connection, publicKey);
   const solanaBalance = await getSolanaBalance(connection, publicKey);
-  const prices = await getPrices();
+  const prices = await getPrices(connection, publicKey);
   const balances = await decorateBalancePrices([solanaBalance, ...tokensBalance], prices);
   if (prices) {
     const sortedBalances = balances.sort((a, b) => a.usdBalance < b.usdBalance);
