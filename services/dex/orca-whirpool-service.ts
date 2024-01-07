@@ -14,8 +14,8 @@ export async function getTokenPrice(connection, publicKey, tokenMint) {
       connection,
       {
         publicKey: publicKey,
-        signAllTransactions: null,
-        signTransaction: null,
+        signAllTransactions: async () => { return [] },
+        signTransaction: async () => { throw "error" },
       },
       whirpools.ORCA_WHIRLPOOL_PROGRAM_ID
     )
@@ -27,7 +27,7 @@ export async function getTokenPrice(connection, publicKey, tokenMint) {
       amountSpecifiedIsInput: true,
       tokenIn: tokenMint, // Token from which is required the price
       tokenOut: new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"), // Stablecoin Token on USD
-      tradeAmount: new BN(), // TODO: Get the amount of tokens that the user have
+      tradeAmount: new BN(10), // TODO: Get the amount of tokens that the user have
     });
   
   if (route) {
