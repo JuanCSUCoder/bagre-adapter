@@ -69,10 +69,15 @@ export async function getTokensPrice(
   return prices
 }
 
+type Prices = {
+  mint: string;
+  usdPrice: Decimal
+}[];
+
 export async function getWalletTokensPrice(
   connection: Connection,
   publicKey: PublicKey
-): Promise<PriceMap | null> {
+): Promise<Prices | null> {
   let addresses: string[] = [];
 
   const handle = connection
@@ -102,9 +107,14 @@ export async function getWalletTokensPrice(
 
   console.log(`Mint Addresses: ${JSON.stringify(addresses)}`);
 
-  return await getTokensPrice(
+  const priceMap = await getTokensPrice(
     connection,
     publicKey,
     addresses,
   );
+
+  return addresses.map(mint => ({
+    mint: mint,
+    usdPrice: priceMap[mint],
+  }))
 }
