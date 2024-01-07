@@ -37,9 +37,12 @@
   "dependencies": {
     "@bonfida/spl-name-service": "^2.1.0",
     "@coral-xyz/anchor": "^0.29.0",
+    "@metaplex-foundation/mpl-token-metadata": "^3.1.2",
+    "@metaplex-foundation/umi": "^0.8.10",
+    "@metaplex-foundation/umi-bundle-defaults": "^0.8.10",
     "@orca-so/whirlpools-sdk": "^0.11.8",
     "@solana/spl-token": "^0.3.9",
-    "@solana/web3.js": "^1.87.6",
+    "@solana/web3.js": "^1.88.0",
     "axios": "^0.27.2",
     "bip32": "^2.0.6",
     "bip39": "^3.1.0",
