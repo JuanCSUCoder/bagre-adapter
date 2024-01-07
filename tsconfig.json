@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "lib": ["ES2023"],
     "esModuleInterop": true,
     "target": "ES6",
     "outDir": "./dist/",
