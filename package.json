@@ -13,6 +13,7 @@
     "linter": "eslint ./ --fix",
     "build": "rimraf dist/* && tsc -p src",
     "clean": "rimraf dist/*",
+    "clear": "rimraf dist/* node_modules bun.lockb package-lock.json",
     "watch": "tsc -w -p src",
     "publish:patch": "npm version patch && npm publish",
     "test": "jest",
