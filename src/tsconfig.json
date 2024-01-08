@@ -5,7 +5,8 @@
     "outDir": "../dist/",
     "moduleResolution": "Node",
     "declaration": true,
-    "allowJs": true
+    "allowJs": true,
+    "skipLibCheck": true
   },
   "include": ["./**/*.js", "./**/*.cjs", "./**/*.mjs", "./**/*.ts"]
 }
