@@ -1,28 +1,25 @@
-const { LAMPORTS_PER_SOL, Connection, PublicKey } = require("@solana/web3.js");
-const {
+import { LAMPORTS_PER_SOL, Connection, PublicKey } from "@solana/web3.js";
+import {
   decorateBalanceList,
   decorateBalancePrices,
-} = require("../token-decorator");
-const {
+} from "../token-decorator";
+import {
   getTokensByOwner,
   getTokenList,
-} = require("./solana-token-list-service");
-const {
+} from "./solana-token-list-service";
+import {
   SOL_DECIMALS,
   SOL_SYMBOL,
   SOL_NAME,
   SOL_LOGO,
   SOL_ADDRESS,
-} = require("../../constants/token-constants.js");
-const { getLast24HoursChange } = require("../common-balance-service");
-const { getPricesByPlatform } = require("../price-service");
-const { SOLANA } = require("../../constants/platforms.js");
-const {
-  getTokensPrice,
+} from "../../constants/token-constants.js";
+import { getLast24HoursChange } from "../common-balance-service";
+import {
   getWalletTokensPrice,
-} = require("../dex/orca-whirpool-service.ts");
+} from "../dex/orca-whirpool-service";
 
-const getSolanaBalance = async (connection, publicKey) => {
+export const getSolanaBalance = async (connection, publicKey) => {
   const balance = await connection.getBalance(publicKey);
   const uiAmount = balance / LAMPORTS_PER_SOL;
   return {
@@ -38,20 +35,14 @@ const getSolanaBalance = async (connection, publicKey) => {
   };
 };
 
-const getTokensBalance = async (connection, publicKey) => {
+const getTokensBalance = async (connection: Connection, publicKey: PublicKey) => {
   const ownerTokens = await getTokensByOwner(connection, publicKey);
   const notEmptyTokens = ownerTokens.filter((t) => t.amount && t.amount > 0);
   const tokens = await getTokenList();
   return decorateBalanceList(notEmptyTokens, tokens);
 };
 
-/**
- *
- * @param {Connection} connection - The RPC Connection to the Solana Network
- * @param {PublicKey} publicKey - The publicKey of the wallet account
- * @returns
- */
-const getPrices = async (connection, publicKey) => {
+export const getPrices = async (connection: Connection, publicKey: PublicKey) => {
   try {
     return await getWalletTokensPrice(connection, publicKey);
   } catch (e) {
@@ -60,7 +51,7 @@ const getPrices = async (connection, publicKey) => {
   }
 };
 
-const getBalance = async (connection, publicKey) => {
+export const getBalance = async (connection: Connection, publicKey: PublicKey) => {
   const tokensBalance = await getTokensBalance(connection, publicKey);
   const solanaBalance = await getSolanaBalance(connection, publicKey);
   const prices = await getPrices(connection, publicKey);
@@ -79,10 +70,4 @@ const getBalance = async (connection, publicKey) => {
   } else {
     return { items: balances };
   }
-};
-
-module.exports = {
-  getBalance,
-  getSolanaBalance,
-  getPrices,
 };
