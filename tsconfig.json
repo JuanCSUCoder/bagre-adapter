@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "ES6",
+    "outDir": "../dist/",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "declarationMap": true,
+    "allowJs": true,
+    "skipLibCheck": true
+  },
+  "include": ["./**/*.js", "./**/*.cjs", "./**/*.mjs", "./**/*.ts"]
+}
