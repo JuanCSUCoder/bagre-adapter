@@ -105,6 +105,6 @@ export async function getWalletTokensPrice(
 
   return addresses.map((mint) => ({
     mint: mint,
-    usdPrice: priceMap[mint],
+    usdPrice: priceMap ? priceMap[mint] || new Decimal(0) : new Decimal(0),
   }));
 }
