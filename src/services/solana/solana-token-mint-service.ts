@@ -1,11 +1,12 @@
 import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { Connection, PublicKey } from "@solana/web3.js";
+import { SOL_ADDRESS } from "../../constants/token-constants";
 
 export async function getWalletMintsAccounts(
   connection: Connection,
   publicKey: PublicKey
 ): Promise<string[]> {
-  let addresses: string[] = [];
+  let addresses: string[] = [SOL_ADDRESS];
 
   const handle = connection
     .getParsedTokenAccountsByOwner(publicKey, {

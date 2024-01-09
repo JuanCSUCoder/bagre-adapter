@@ -9,10 +9,7 @@ const decorateBalanceList = async (items, tokens) => {
 
 const decorateBalancePrices = async (items, prices) => {
   const result = items.map((item) => {
-    const price = item.symbol
-      ? prices?.find((t) => t.id == item.coingeckoId) ||
-        prices?.find((t) => t.symbol.toUpperCase() == item.symbol.toUpperCase())
-      : null;
+    const price = prices?.find((t) => t.mint == item.mint);
     const usdBalance = price?.usdPrice ? item.uiAmount * price.usdPrice : null;
     const last24HoursChange = getLast24HoursChange(price, usdBalance);
     return {
